@@ -1,5 +1,5 @@
-import StudentRoster from '../components/StudentRoster';
+import LabScreen from '../components/LabScreen';
 
 export default function Index() {
-  return <StudentRoster />;
+  return <LabScreen />;
 }

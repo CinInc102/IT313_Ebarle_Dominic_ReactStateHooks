@@ -1,59 +1,79 @@
-# Laboratory 4: React Components & JSX in Action
+# Laboratory 5: React State and Hooks
 
 ## Project Description
 
-This project demonstrates React Native components, JSX, props, conditional rendering, list rendering, and the use of unique keys in a student roster application.
+The Lab Timer and Practice Tracker is a React Native application built for IT-313 Mobile Programming. It demonstrates state management, event handling, conditional rendering, useEffect cleanup, custom hooks, and lifting state up.
 
-## Components
+## Features
 
-### 1. StudentCard
+* **Practice Tracker:** Displays the number of problems solved.
+* **Solve +1 Button:** Increases the solved counter by one.
+* **Reset Button:** Resets the solved counter to zero.
+* **Success Message:** Displays "Great job!" when five or more problems have been solved.
+* **Stopwatch:** Displays elapsed time in minutes and seconds.
+* **Start and Stop Buttons:** Starts, pauses, and resumes the stopwatch.
+* **Effect Cleanup:** Clears the timer interval when the stopwatch stops or the effect is cleaned up.
 
-The `StudentCard` component displays an individual student's information. It receives the following props:
+## Components and Custom Hook
 
-* `name`: The student's name.
-* `course`: The student's course.
-* `units`: The number of enrolled units.
-* `isFullLoad`: A Boolean value indicating whether the student has a full load.
+### 1. LabScreen
 
-The component uses conditional rendering to display the **Full Load** label only when `isFullLoad` is `true`.
+The `LabScreen` component manages the solved counter and stopwatch running state using `useState`. It passes the appropriate values and event-handler functions to the `PracticeTracker` and `Stopwatch` components.
 
-### 2. StudentRoster
+### 2. PracticeTracker
 
-The `StudentRoster` component contains an array of student records and displays them using JavaScript's `.map()` method.
+The `PracticeTracker` component receives the solved counter and callback functions through props. It provides the Solve +1 and Reset buttons and conditionally displays "Great job!" when the solved counter reaches five.
 
-It also demonstrates:
+### 3. Stopwatch
 
-* Displaying the total number of students using `students.length`.
-* Rendering each student through the `StudentCard` component.
-* Using `key={student.id}` to provide each student with a stable, unique key.
-* Reversing the displayed student order using a button.
+The `Stopwatch` component receives the elapsed seconds and running status through props. It formats the elapsed time as `MM:SS` and displays either "Running…" or "Paused".
 
-## React Key Experiment
+### 4. useStopwatch
 
-For the experiment, the student key was temporarily changed from `key={student.id}` to an array-index-based key.
+The `useStopwatch` custom hook uses `useState` to store elapsed seconds and `useEffect` to manage a one-second interval. Its cleanup function calls `clearInterval` to prevent the interval from continuing after cleanup.
 
-The list was then reversed to observe the behavior. The cards continued to display the student information, although index-based keys can cause problems when list items are reordered, inserted, or removed, particularly when components have their own state.
+## React Concepts Demonstrated
 
-The original implementation was restored to `key={student.id}` because stable, unique keys are the recommended approach.
+* `useState` for managing component state.
+* `useEffect` for managing a timer interval.
+* Effect cleanup with `clearInterval`.
+* Conditional rendering based on state.
+* Event handling with button press callbacks.
+* Lifting state up to a shared parent component.
+* Functional state updates to increment the solved counter safely.
+* Reusable components connected through props.
 
 ## How to Run the Application
 
-1. Open the project folder in a terminal.
+1. Install Node.js and pnpm.
 
-2. Install the dependencies if they are not already installed:
+2. Open the project folder in a terminal.
+
+3. Install the project dependencies:
 
    ```bash
    pnpm install
    ```
 
-3. Start the Expo development server:
+4. Start the Expo development server:
 
    ```bash
    pnpm exec expo start
    ```
 
-4. Press `w` in the terminal to open the application in a web browser, or use the appropriate Expo development option for a mobile device or emulator.
+5. Press `w` in the Expo terminal to run the application in a web browser, or open it on a compatible Android emulator or device using Expo's available development options.
+
+## Testing
+
+The following behaviors were tested in the web version of the application:
+
+* The solved counter starts at zero.
+* Solve +1 increases the counter.
+* "Great job!" appears at five solved problems and disappears after resetting.
+* The stopwatch starts, pauses, and resumes without resetting its elapsed time.
+* Resetting the solved counter does not reset the stopwatch.
+* The stopwatch uses an effect cleanup function to clear its interval.
 
 ## Conclusion
 
-This project demonstrates how React Native components can be reused through props, how conditional rendering controls what appears on
+This project illustrates the use of React State and Hooks for developing an interactive application where components, state, events, conditional rendering, and timers have all been used.
